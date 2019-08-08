@@ -94,3 +94,43 @@ INSERT INTO tb_cliente (nm_cliente, dt_nascimento) VALUES
 
 SELECT * FROM tb_cliente;
 SELECT * FROM tb_pizza;
+SELECT * FROM tb_pizza_pedido;
+SELECT * FROM tb_pedido;
+
+ALTER TABLE tb_pedido
+ADD COLUMN ds_pedido VARCHAR(128);
+
+ALTER TABLE tb_pizza_pedido
+DROP COLUMN nr_qtd;
+
+ALTER TABLE tb_pizza_pedido
+ADD COLUMN qt_pizza INT
+	NOT NULL;
+
+INSERT INTO tb_pedido (dt_pedido,id_cliente,ds_pedido) VALUES
+(20190907,3,'Sem ervilha');
+
+INSERT INTO tb_pizza_pedido (id_pizza,id_pedido,qt_pizza) VALUES
+(2,1,2);
+
+ CREATE TABLE tb_funcionario (
+	cd_funcionario INT UNSIGNED
+		NOT NULL
+		AUTO_INCREMENT
+        PRIMARY KEY,
+	nm_funcionario VARCHAR(128)
+		NOT NULL,
+	nm_cargo VARCHAR(60)
+		NOT NULL
+);
+
+ALTER TABLE tb_pedido
+ADD COLUMN id_funcionario INT UNSIGNED
+	NOT NULL;
+    
+ALTER TABLE tb_pedido 
+	ADD FOREIGN KEY (id_funcionario) 
+		REFERENCES tb_funcionario(cd_funcionario);
+
+desc tb_funcionario;
+desc tb_pedido;
