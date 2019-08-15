@@ -40,7 +40,7 @@ GovernmentForm 'Forma de Governo'
 FROM 
 country
 WHERE
-Continent = 'Europe';
+Continent LIKE 'Europe';
 
 /* Exercício 06 */
 SELECT
@@ -66,6 +66,7 @@ Name 'País'
 FROM
 country
 WHERE
+Continent LIKE 'Asia' AND
 Population > 200000000 AND
 Name LIKE '%n%';
 
