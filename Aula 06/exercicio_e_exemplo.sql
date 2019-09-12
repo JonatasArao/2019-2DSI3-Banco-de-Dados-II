@@ -6,12 +6,12 @@ SELECT
     CONCAT(AC.first_name,' ', AC.last_name) 'Ator'
 FROM
 	film FI
-INNER JOIN
-	film_actor FA ON(FA.film_id = FI.film_id)
-INNER JOIN
-	actor AC ON(FA.actor_id = AC.actor_id) 
+	INNER JOIN
+	film_actor FA ON (FI.film_id = FA.film_id)
+    INNER JOIN
+    actor AC ON (FA.actor_id = AC.actor_id)
 ;
-
+    
 /*	II) Cliente/Endereço/Cidade/País	*/
 SELECT
 	CONCAT(CTM.first_name,' ', CTM.last_name) 'Cliente',
@@ -45,21 +45,68 @@ FROM
     category CAT ON(FCA.category_id = CAT.category_id)
 ;
 
-/*	IV) Filme/ Id. da Cópia/ Loja	*/
-SELECT
+/*	IV) Filme/ Id. da Cópia/ Loja	*/    
 	
 
 /*	V) Cliente/ Nome do Filme Alugado pelo Cliente/ Loja */
 
 
 /*	32) EXIBIR O NOME DO FILME E A QUANTIDADE DE ATORES QUE TRABALHARAM NO FILME	*/
+SELECT
+	FI.Title 'Filme',
+    COUNT(AC.actor_id) 'Quantidade de Atores'
+FROM
+	film FI
+	INNER JOIN
+	film_actor FA ON (FI.film_id = FA.film_id)
+    INNER JOIN
+    actor AC ON (AC.actor_id = FA.actor_id)
+    GROUP BY FI.film_id
+;
     
-
 /*	33) EXIBIR O NOME DO ATOR/ATRIZ E A QUANTIDADE DE FILMES QUE ELE/ELA TRABALHOU	*/
+SELECT
+	CONCAT(AC.first_name,' ',AC.last_name) 'Ator/Atriz',
+    COUNT(FI.film_id) 'Quantidade de Filmes'
+FROM
+	actor AC 
+    INNER JOIN
+    film_actor FA ON(AC.actor_id = FA.actor_id)
+    INNER JOIN
+    film FI ON(FI.film_id = FA.film_id)
+    GROUP BY AC.actor_id
+;
 
 /*	34) EXIBIR O NOME DA CATEGORIA E A QUANTIDADE DE FILMES CADASTRADOS PARA AQUELA CATEGORIA	*/
+SELECT
+	CA.name 'Categoria',
+    COUNT(FI.film_id) 'Quantidade de Filmes'
+FROM
+	category CA 
+    INNER JOIN
+    film_category FC ON(CA.category_id = FC.category_id)
+    INNER JOIN
+    film FI ON(FC.film_id = FI.film_id)
+    GROUP BY CA.category_id
+;
 
 /*	35) EXIBIR O NOME DO ATOR/ATRIZ E A QUANTIDADE DE CATEGORIAS DIFERENTES DE FILMES QUE ELE/ELA PARTICIPOU	*/
+SELECT
+	CONCAT(AC.first_name,' ',AC.last_name) 'Ator',
+    COUNT(CT.category_id) 'Quantidade de Categorias'
+FROM
+	actor AC 
+    INNER JOIN
+    film_actor FA ON(AC.actor_id = FA.actor_id)
+    INNER JOIN
+    film FI ON(FI.film_id = FA.film_id)
+    INNER JOIN
+    film_category FC ON(FC.film_id = FI.film_id)
+    INNER JOIN
+    category CT ON(CT.category_id = FC.category_id)
+	GROUP BY AC.actor_id
+;
+
 
 /*	36) EXIBIR O NOME DO CLIENTE E A QUANTIDADE DE FILMES QUE CADA CLIENTE ALUGOU EM ORDEM DECRESCENTE	*/
 
